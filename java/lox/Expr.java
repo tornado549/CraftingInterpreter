@@ -8,6 +8,7 @@ abstract class Expr {
     R visitGroupingExpr(Grouping expr);
     R visitLiteralExpr(Literal expr);
     R visitUnaryExpr(Unary expr);
+    R visitRPNExpr(RPN rpn);
   }
   static class Binary extends Expr {
     Binary(Expr left, Token operator, Expr right) {
@@ -62,6 +63,17 @@ abstract class Expr {
 
     final Token operator;
     final Expr right;
+  }
+
+  static class RPN extends Expr {
+    RPN(Expr expression) {
+      this.expr = expression;
+    }
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitRPNExpr(this);
+    }
+
+    final Expr expr;
   }
 
   abstract <R> R accept(Visitor<R> visitor);
