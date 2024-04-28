@@ -45,6 +45,11 @@ class Parser {
 
     // comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
     private Expr comparison() {
+        if (match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL, PLUS, SLASH, STAR)) {
+            Token op = previous();
+            Expr right = term();
+            throw error(op, "Expect left operator.");
+        }
         Expr res = term();
         while (match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL)) {
             Token op = previous();
@@ -170,4 +175,7 @@ class Parser {
     private Token previous() {
         return tokens.get(current - 1);
     }
+
+    // TODO: 2.6 challenge 2
+
 }

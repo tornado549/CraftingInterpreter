@@ -11,15 +11,16 @@ import java.util.List;
 public class Lox {
     static boolean hadError = false;
     public static void main(String[] args) throws IOException {
-        if (args.length > 1) {
-            System.out.println("Usage: jlox [script]");
-            // https://man.freebsd.org/cgi/man.cgi?query=sysexits&apropos=0&sektion=0&manpath=FreeBSD+4.3-RELEASE&format=html
-            System.exit(64);
-        } else if (args.length == 1) {
-            runFile(args[0]);
-        } else {
-            runPrompt();
-        }
+        runFile("in.txt");
+        // if (args.length > 1) {
+        //     System.out.println("Usage: jlox [script]");
+        //     // https://man.freebsd.org/cgi/man.cgi?query=sysexits&apropos=0&sektion=0&manpath=FreeBSD+4.3-RELEASE&format=html
+        //     System.exit(64);
+        // } else if (args.length == 1) {
+        //     runFile(args[0]);
+        // } else {
+        //     runPrompt();
+        // }
     }
 
     private static void runFile(String path) throws IOException {
