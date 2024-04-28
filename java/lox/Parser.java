@@ -16,7 +16,13 @@ class Parser {
 
     Expr parse() {
         try {
-            return expression();
+            Expr res = expression();
+            while (match(COMMA)) {
+                // Token op = previous();
+                Expr right = expression();
+                res = right;
+            }
+            return res;
         } catch (ParseError error) {
             return null;
         }
