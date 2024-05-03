@@ -24,6 +24,7 @@ class Interpreter implements Expr.Visitor<Object> {
 
         return object.toString();
     }
+
     private boolean isTruthy(Object object) {
         if (object == null) return false;
         if (object instanceof Boolean) return (boolean) object;
@@ -96,6 +97,10 @@ class Interpreter implements Expr.Visitor<Object> {
                 return (double) left - (double) right;
             case SLASH:
                 checkNumberOperands(expr.operator, left, right);
+                double right_value = (double) right;
+                if (right_value == 0) {
+                    throw new RuntimeError(expr.operator, "Divide a number by zero!");
+                }
                 return (double) left / (double) right;
             case STAR:
                 checkNumberOperands(expr.operator, left, right);
