@@ -108,6 +108,13 @@ class Interpreter implements Expr.Visitor<Object> {
                 if (left instanceof String && right instanceof String) {
                     return (String) left + (String) right;
                 }
+
+                if ((left instanceof String && right instanceof Double) || (left instanceof Double && right instanceof String)) {
+                    String left_str = left.toString();
+                    String right_str = right.toString();
+                    return left_str + right_str;
+                }
+
                 throw new RuntimeError(expr.operator,
                         "Operands must be two numbers or two strings.");
         }
