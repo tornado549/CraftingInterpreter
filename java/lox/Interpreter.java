@@ -122,8 +122,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     return left_str + right_str;
                 }
 
-                throw new RuntimeError(expr.operator,
-                        "Operands must be two numbers or two strings.");
+                throw new RuntimeError(expr.operator, "Operands must be two numbers or two strings.");
         }
 
         // Unreachable.
@@ -186,8 +185,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return null;
     }
 
-    void executeBlock(List<Stmt> statements,
-                      Environment environment) {
+    void executeBlock(List<Stmt> statements, Environment environment) {
         Environment previous = this.environment;
         try {
             this.environment = environment;

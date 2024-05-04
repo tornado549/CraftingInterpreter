@@ -6,11 +6,8 @@ import java.util.ArrayList;
 import static lox.TokenType.*;
 
 class Parser {
-    private static class ParseError extends RuntimeException {}
-
     private final List<Token> tokens;
     private int current = 0;
-
     Parser(List<Token> tokens) {
         this.tokens = tokens;
     }
@@ -77,7 +74,7 @@ class Parser {
             Expr value = assignment();
 
             if (expr instanceof Expr.Variable) {
-                Token name = ((Expr.Variable)expr).name;
+                Token name = ((Expr.Variable) expr).name;
                 return new Expr.Assign(name, value);
             }
 
@@ -244,6 +241,9 @@ class Parser {
 
     private Token previous() {
         return tokens.get(current - 1);
+    }
+
+    private static class ParseError extends RuntimeException {
     }
 
     // TODO: 2.6 challenge 2
