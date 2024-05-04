@@ -14,16 +14,16 @@ public class Lox {
     static boolean hadRuntimeError = false;
 
     public static void main(String[] args) throws IOException {
-        runFile("in.txt");
-        // if (args.length > 1) {
-        //     System.out.println("Usage: jlox [script]");
-        //     // https://man.freebsd.org/cgi/man.cgi?query=sysexits&apropos=0&sektion=0&manpath=FreeBSD+4.3-RELEASE&format=html
-        //     System.exit(64);
-        // } else if (args.length == 1) {
-        //     runFile(args[0]);
-        // } else {
-        //     runPrompt();
-        // }
+        // runFile("in.txt");
+        if (args.length > 1) {
+            System.out.println("Usage: jlox [script]");
+            // https://man.freebsd.org/cgi/man.cgi?query=sysexits&apropos=0&sektion=0&manpath=FreeBSD+4.3-RELEASE&format=html
+            System.exit(64);
+        } else if (args.length == 1) {
+            runFile(args[0]);
+        } else {
+            runPrompt();
+        }
     }
 
     private static void runFile(String path) throws IOException {
@@ -49,14 +49,22 @@ public class Lox {
     private static void run(String source) {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
-
         Parser parser = new Parser(tokens);
-        List<Stmt> statements = parser.parse();
 
-        // Stop if there was a syntax error.
-        if (hadError) return;
+        if (source.endsWith(";")) {
+            // stmt
+            List<Stmt> statements = parser.parse();
 
-        interpreter.interpret(statements);
+            // Stop if there was a syntax error.
+            if (hadError) return;
+
+            interpreter.interpret(statements);
+        } else {
+            // expr
+            Expr expr = parser.parseExpr();
+            if (hadError) return;
+            interpreter.interpret(expr);
+        }
     }
 
     static void error(int line, String message) {

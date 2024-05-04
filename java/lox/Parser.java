@@ -21,6 +21,10 @@ class Parser {
         return statements;
     }
 
+    Expr parseExpr() {
+        return expression();
+    }
+
     private Stmt statement() {
         if (match(PRINT)) return printStatement();
         if (match(LEFT_BRACE)) return new Stmt.Block(block());
