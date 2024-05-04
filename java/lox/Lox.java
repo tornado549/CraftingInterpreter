@@ -12,17 +12,18 @@ public class Lox {
     private static final Interpreter interpreter = new Interpreter();
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
+
     public static void main(String[] args) throws IOException {
-        // runFile("in.txt");
-        if (args.length > 1) {
-            System.out.println("Usage: jlox [script]");
-            // https://man.freebsd.org/cgi/man.cgi?query=sysexits&apropos=0&sektion=0&manpath=FreeBSD+4.3-RELEASE&format=html
-            System.exit(64);
-        } else if (args.length == 1) {
-            runFile(args[0]);
-        } else {
-            runPrompt();
-        }
+        runFile("in.txt");
+        // if (args.length > 1) {
+        //     System.out.println("Usage: jlox [script]");
+        //     // https://man.freebsd.org/cgi/man.cgi?query=sysexits&apropos=0&sektion=0&manpath=FreeBSD+4.3-RELEASE&format=html
+        //     System.exit(64);
+        // } else if (args.length == 1) {
+        //     runFile(args[0]);
+        // } else {
+        //     runPrompt();
+        // }
     }
 
     private static void runFile(String path) throws IOException {
@@ -50,12 +51,12 @@ public class Lox {
         List<Token> tokens = scanner.scanTokens();
 
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         // Stop if there was a syntax error.
         if (hadError) return;
 
-        interpreter.interpret(expression);
+        interpreter.interpret(statements);
     }
 
     static void error(int line, String message) {

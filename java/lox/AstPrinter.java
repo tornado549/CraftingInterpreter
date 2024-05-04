@@ -28,10 +28,15 @@ public class AstPrinter implements Expr.Visitor<String> {
     }
 
     @Override
-    public String visitRPNExpr(Expr.RPN rpn) {
-        System.out.println("visitRPNExpr...");
+    public String visitVariableExpr(Expr.Variable expr) {
         return null;
     }
+
+    @Override
+    public String visitAssignExpr(Expr.Assign expr) {
+        return null;
+    }
+
 
     private String parenthesize(String name, Expr... exprs) {
         StringBuilder builder = new StringBuilder();
@@ -56,8 +61,8 @@ public class AstPrinter implements Expr.Visitor<String> {
         //                 new Expr.Literal(45.67)));
         //
         // System.out.println(new AstPrinter().print(expression));
-        Expr expression = new Expr.Literal(123);
-        Expr.RPN rpn = new Expr.RPN(expression);
-        System.out.println(new AstPrinter().print(rpn));
+        // Expr expression = new Expr.Literal(123);
+        // Expr.RPN rpn = new Expr.RPN(expression);
+        // System.out.println(new AstPrinter().print(rpn));
     }
 }
